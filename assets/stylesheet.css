@@ -1,0 +1,71 @@
+.banner {
+    height: 75px;
+    margin: 0px -10px 10px;
+    background-color: rgb(66, 196, 247);
+    border-radius: 2px;
+}
+
+.t3_fon {
+    padding: 30px; /* Расстояние от картинки до рамки */
+    background: rgb(89, 199, 199); /* Цвет фона */
+    margin-right: 10px; /* Отступ справа */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+.tbanner {
+    height: 75px;
+    background-color: rgb(119, 224, 219);
+    border-radius: 2px;
+}
+.tbanner h2{
+    color: rgb(0, 0, 0);
+    padding-top: 10px;
+    margin-left: 2%;
+    display: inline-block;
+}
+
+.banner h2{
+    color: rgb(0, 0, 0);
+    /*padding-top: 10px;
+    margin-left: 2%;*/
+    display: inline-block;
+    text-align: center;
+}
+
+.banner Img{
+    position: relative;
+    float: left;
+    /*right: 100px;
+    height: 100px;*/
+    right: 10px;
+    height: 75px;
+}
+
+body {
+    /*background-image: url(https://fb.ru/misc/i/gallery/24207/1466878.jpg);*/
+    background-attachment: fixed; /* Фиксируем фон */
+   }
+
+.mainMenu Tabs{ /**/
+    height: 15px;
+    margin: 0px -10px 10px;
+    background-color: rgb(66, 196, 247);
+    border-radius: 2px;
+}
+
+.t2_flags1 Img{
+    position: relative;
+    float: left;
+    right: 100px;
+    height: 100px;
+}
+
+
+.test Img {
+    position: relative;
+    float: right; /* Обтекание картинки по левому краю */
+    padding-left: 10px; /* Отступ слева */
+    padding-bottom: 10px; /* Отступ снизу */
+    right: 300x;
+    height: 300px;
+   }
