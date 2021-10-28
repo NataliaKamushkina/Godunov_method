@@ -9,6 +9,7 @@ import dash_table
 from dash.dependencies import Input, Output, State
 import dash_core_components as dcc
 import dash_html_components as html
+import plotly.graph_objs as go
 
 gamma = 1.4
 mol_mass = 0.029
@@ -41,7 +42,7 @@ pressure, density, velocity = solver(
     right_velocity
 )
 
-"""
+###
 import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(20,10))
@@ -66,7 +67,7 @@ def plot(index):
     
     ax_1.set_ylabel("Давление", fontsize=24)
     #ax_2.set_ylim(density_min, density_max)
-    ax_2.set_ylabel("Плотность", fontsize=24)
+    ax_2.set_ylabel("Плотность", fontsize=24) 
     #ax_3.set_ylim(velocity_min, velocity_max)
     ax_3.set_ylabel("Скорость", fontsize=24)
 
@@ -74,7 +75,7 @@ def plot(index):
     ax_2.plot(x_mesh, density[index], linewidth=3.0)
     ax_3.plot(x_mesh, velocity[index], linewidth=3.0)
 
-
+"""
 from matplotlib import animation
 
 anim = animation.FuncAnimation(fig, plot, interval=200, frames=len(times) - 1)
@@ -95,34 +96,51 @@ app.layout = html.Div([
     }),
     html.H3("Для данных на вход"),
     html.Div([
+    # Давление
     "left_pressure: ",
-    dcc.Input(id="text-input1", type="text", placeholder = left_pressure), 
-    html.Br(),
-    "left_density:  ",
-    dcc.Input(id="text-input2", type="text", placeholder = left_density),
-    html.Br(),
-    "left_velocity: ",
-    dcc.Input(id="text-input3", type="text", placeholder = left_velocity),
-    html.Br(),
+    dcc.Input(id="text-input1", type="text", placeholder = left_pressure),
     "right_pressure: ",
     dcc.Input(id="text-input4", type="text", placeholder = right_pressure), 
+    dcc.RangeSlider(
+    min=-100, # ???
+    max=100, # ???
+    value=[left_pressure, right_pressure], 
+    tooltip={"placement": "bottom", "always_visible": True}),
     html.Br(),
+
+    # Плотность 
+    "left_density:  ",
+    dcc.Input(id="text-input2", type="text", placeholder = left_density),
     "right_density: ",
     dcc.Input(id="text-input5", type="text", placeholder = right_density),
+    dcc.RangeSlider(
+    min=-100, # ???
+    max=100, # ???
+    value=[left_density, right_density], 
+    tooltip={"placement": "bottom", "always_visible": True}),
     html.Br(),
+
+    # Скорость
+    "left_velocity: ",
+    dcc.Input(id="text-input3", type="text", placeholder = left_velocity),
     "right_velocity: ",
     dcc.Input(id="text-input6", type="text", placeholder = right_velocity),
+    dcc.RangeSlider(
+    min=-100, # ???
+    max=100, # ???
+    value=[left_velocity, right_velocity], 
+    tooltip={"placement": "bottom", "always_visible": True}),
     html.Br(),
 
     html.Div(id='PRINTOUTPUT'),
-    html.Button('Ok', id='create_button')
-], className="t3_fon",
+    html.Button('Ok', id='create_button'),
+    ], className="t3_fon",
     ),
     html.H3("Для графиков"),
     html.Div([
-"График: ",
+    "График: ",
         ], className="t3_fon",
-    ), 
+    ),
 ])
 
 @app.callback(Output('PRINTOUTPUT', 'children'),
@@ -143,6 +161,13 @@ def xyz(clicks, selected_tab, textinput):
     
     return "Successful"
 
+# 1
+
+
+
+#fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 1, 2])])
+
+#dcc.Graph(figure=fig)
 #################################################
 
 if __name__ == '__main__':
