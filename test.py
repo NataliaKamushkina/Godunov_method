@@ -10,11 +10,6 @@ from dash.dependencies import Input, Output, State
 import dash_core_components as dcc
 import dash_html_components as html
 
-from dash.dependencies import Input, Output
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output, State
 gamma = 1.4
 mol_mass = 0.029
 
@@ -92,34 +87,42 @@ anim.save("Две ударные волны.mp4", writer = writer)
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
 app.title='Построение точного решения задачи Римана'
-"""
-app.layout = html.Div(className="tbanner",
-    children=[
-       html.H1(children='Построение точного решения задачи Римана', style={
+
+app.layout = html.Div([
+    html.H1("Построение точного решения задачи Римана", style={
         'textAlign': 'center',
-        'color': 'white'
+        'color': 'blue'
     }),
-"""
+    html.H3("Для данных на вход"),
+    html.Div([
+    "left_pressure: ",
+    dcc.Input(id="text-input1", type="text", placeholder = left_pressure), 
+    html.Br(),
+    "left_density:  ",
+    dcc.Input(id="text-input2", type="text", placeholder = left_density),
+    html.Br(),
+    "left_velocity: ",
+    dcc.Input(id="text-input3", type="text", placeholder = left_velocity),
+    html.Br(),
+    "right_pressure: ",
+    dcc.Input(id="text-input4", type="text", placeholder = right_pressure), 
+    html.Br(),
+    "right_density: ",
+    dcc.Input(id="text-input5", type="text", placeholder = right_density),
+    html.Br(),
+    "right_velocity: ",
+    dcc.Input(id="text-input6", type="text", placeholder = right_velocity),
+    html.Br(),
 
-dcc.Tabs(id="tabs", value='tab-0', children=[
-        dcc.Tab(label='Для данных на вход', value='tab-0')      
-    ], className="mainMenu"),
-        #html.Div(id='tabs-content'),   
-#])
-
-"""
-tab_div = html.Div(
-    dcc.Tabs(id='selection_tabs', value='tab-1', children=[
-        dcc.Tab(label='Tab one', value='tab-1'),
-        dcc.Tab(label='Tab two', value='tab-2'),
-]))
-"""
-app.layout = html.Div(children=[
-    html.H1(children='Test app'),
-   # tab_div,
-    dcc.Input(id="text-input", type="text", placeholder=""),
     html.Div(id='PRINTOUTPUT'),
-    html.Button('Click me', id='create_button')
+    html.Button('Ok', id='create_button')
+], className="t3_fon",
+    ),
+    html.H3("Для графиков"),
+    html.Div([
+"График: ",
+        ], className="t3_fon",
+    ), 
 ])
 
 @app.callback(Output('PRINTOUTPUT', 'children'),
@@ -129,7 +132,6 @@ app.layout = html.Div(children=[
 
 def xyz(clicks, selected_tab, textinput):    
 
-    #To determine if n_clicks is changed. 
     changed_ids = [p['prop_id'].split('.')[0] for p in dash.callback_context.triggered]
     button_pressed = 'create_button' in changed_ids
 
@@ -141,47 +143,6 @@ def xyz(clicks, selected_tab, textinput):
     
     return "Successful"
 
-@app.callback(Output('tabs-content', 'children'),
-              [Input('tabs', 'value')])
-def render_content(tab):
-    if tab == 'tab-0':
-        return html.Div([ dcc.Textarea(placeholder='Введите Ваш текст...',value='Здесь можно оставить заметки',style={'width': '20%', 'height': '30%', 'display': 'block','margin': '0 auto'}),  
-            
-    html.H1(children=[
-            dcc.Markdown('''
- # Для данных на вход
-'''), 
-#dcc.Textarea(placeholder='Введите Ваш текст...',value='...',style={'width': '20%', 'height': '30%', 'display': 'block','margin': '0 auto'})
-  ], className="t3_fon"),
-        html.H1(children=[
-            dcc.Markdown('''
- # Для картинок/ Нарисовать график
-'''), 
-#dcc.Textarea(placeholder='Введите Ваш текст...',value='...',style={'width': '20%', 'height': '30%', 'display': 'block','margin': '0 auto'})
-  ], className="t3_fon"),
-html.Ul(id='imglist',children=[
-        #html.Li([html.A(href="", children=[html.Img(src='https://roomester.ru/wp-content/uploads/2019/02/kak-ukrasit-stol-2-18.jpg')])]),            
-    ], #className = "tr_fon"
-    )
-
-        ]),
-@app.callback(
-    Output('container-button-timestamp', 'children'),
-    Input('btn-nclicks-1', 'n_clicks'),
-    Input('btn-nclicks-2', 'n_clicks'),
-    Input('btn-nclicks-3', 'n_clicks')
-)
-def displayClick(btn1, btn2, btn3):
-    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
-    if 'btn-nclicks-1' in changed_id:
-        msg = 'Button 1 was most recently clicked'
-    elif 'btn-nclicks-2' in changed_id:
-        msg = 'Button 2 was most recently clicked'
-    elif 'btn-nclicks-3' in changed_id:
-        msg = 'Button 3 was most recently clicked'
-    else:
-        msg = 'None of the buttons have been clicked yet'
-    return html.Div(msg)
 #################################################
 
 if __name__ == '__main__':
